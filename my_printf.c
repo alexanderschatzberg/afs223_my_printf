@@ -1,5 +1,5 @@
+#include <stdarg.h>
 #include "my_printf.h"
-#include <stdio.h>
 
 // Local function header, can't edit my_printf.h 
 int x_to_n(int x, int n);
@@ -50,16 +50,61 @@ void print_integer(int n, int radix, char* prefix) {
 	// 3) For each 'place', calculate the correct val and print 
 	for (int i = pow - 1; i >= 0; --i) {
 		int digit = u_n / x_to_n(radix, i); // How many of the current base 'fit inside' this digit? 
-		char c = (digit < 10) ? (digit + '0') : (digit - 10 + 'a'); //If the digit > 10, we're going to need to print out a (10) + the num - 10
+
+		//If the digit > 10, we're going to need to print out a (10) + the num - 10
+		char c = (digit < 10) ? (digit + '0') : (digit - 10 + 'a');
+
 		fputc(c, stdout);
-		u_n %= x_to_n(radix, i);
+		u_n %= x_to_n(radix, i); // Continue to the next most significant digit w/ whatever is left 
 	}
 }
 
-// TODO: Your implementation for my_printf goes here.
+// My implementation of my_printf
 void my_printf(const char* format, ...) {
-	return;
+	// Initalize variadic counter 
+	va_list args;
+	va_start(args, format);
+
+	// loop through each character until the end of the string, continuing if we don't see a %
+	for (int i = 0; format[i] != '\0'; ++i) {
+		if (format[i] != '%') { fputc(format[i], stdout); continue; }
+
+		// continue to next character if we have a %
+		++i;
+
+		// Enter a switch statement for each option
+		switch (format[i]) {
+		case '%': // Just print a %
+			fputc('%', stdout);
+			break;
+		case 'd':
+			int d_arg = va_arg(args, int);
+			print_integer(d_arg, 10, "");
+			break;
+		case 'x':
+			int x_arg = va_arg(args, int);
+			print_integer(x_arg, 16, "0x");
+			break;
+		case 'b':
+			int b_arg = va_arg(args, int);
+			print_integer(b_arg, 2, "0b");
+			break;
+		case 's':
+			print_str(va_arg(args, char*));
+			break;
+		case 'c':
+			char c_arg = va_arg(args, int); // Must handle as an int
+			fputc(c_arg, stdout);
+			break;
+		default:
+			print_str("<UNIDENTIFIED FORMAT CODE>");
+			break;
+		}
+	}
 }
+
+
+/*HELPER FUNCTIONS*/
 
 /*Prints out the provided string*/
 void print_str(char* str) {

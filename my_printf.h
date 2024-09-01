@@ -21,7 +21,7 @@
  *
  * @return void
  */
-void print_integer(int n, int radix, char *prefix);
+void print_integer(int n, int radix, char* prefix);
 
 /**
  * Prints string to the console, substituting format codes for formatted
@@ -43,6 +43,6 @@ void print_integer(int n, int radix, char *prefix);
  *
  * @return void
  */
-void my_printf(const char *format, ...);
+void my_printf(const char* format, ...);
 
 #endif // MY_PRINTF_H
