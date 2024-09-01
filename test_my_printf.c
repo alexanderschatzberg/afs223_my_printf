@@ -46,9 +46,10 @@ int main(int argc, char* argv[]) {
   printf("\nMY_PRINTF TESTS:\n");
 
   my_printf("HELLO, WORLD\n");
+  my_printf("%d\n", '3'); // Should print the ascii code 
   my_printf("13 printed in base 10: %d!\n", 13);
   my_printf("%d in hex is %x\n", 27, 27);
-  my_printf("Just a string!\n"); //should print “3410”
+  my_printf("Just a string! %s\n", "Here is another string!");
   my_printf("The answer to life, the universe, and everything: %d\n", 42);
   my_printf("The pass rate in 3410 is most likely not 100%%\n");
   my_printf("As long as you have a %s, they'll think %s. \n", "towel", "you have everything under control");
