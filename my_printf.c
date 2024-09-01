@@ -101,6 +101,7 @@ void my_printf(const char* format, ...) {
 			break;
 		}
 	}
+	va_end(args);
 }
 
 
